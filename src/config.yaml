@@ -11,7 +11,7 @@ metadata:
   title:
     default: Ferensway
     template: '%s — Ferensway'
-  description: 'Practical digital, data and AI consultancy for established businesses.'
+  description: 'A Yorkshire-based delivery partner designing, building and shipping data, digital and AI products that improve operational efficiency and margins.'
   robots:
     index: true
     follow: true

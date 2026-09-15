@@ -1,6 +1,6 @@
 # Ferensway website
 
-The public website for Ferensway, an independent digital, data and AI consultancy based in Hull, East Yorkshire.
+The public website for Ferensway, a Yorkshire-based delivery partner that designs, builds and ships data, digital and AI products to improve operational efficiency and margins.
 
 ## Development
 
