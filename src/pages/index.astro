@@ -1,5 +1,6 @@
 ---
 import Layout from '~/layouts/Layout.astro';
+import brandMark from '~/assets/favicons/favicon.svg';
 
 const metadata = {
   title: 'Ferensway — Data, digital and AI delivery partner',
@@ -16,10 +17,11 @@ const email = 'dan.humphreys@ferensway.com';
     <div class="mx-auto flex min-h-20 max-w-[90rem] items-center justify-between px-5 sm:px-8 lg:px-12">
       <a
         href={import.meta.env.BASE_URL}
-        class="text-[0.92rem] font-semibold tracking-[0.24em] text-[#102b35]"
+        class="inline-flex items-center gap-3 text-[0.92rem] font-semibold tracking-[0.24em] text-[#102b35]"
         aria-label="Ferensway home"
       >
-        FERENSWAY
+        <img src={brandMark.src} width="36" height="36" alt="" class="h-9 w-9 shrink-0" />
+        <span>FERENSWAY</span>
       </a>
 
       <nav class="hidden items-center gap-8 text-[0.9rem] text-[#43575d] md:flex" aria-label="Main navigation">

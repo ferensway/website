@@ -71,6 +71,8 @@ function buildOpenGraph(og: MetaDataOpenGraph): SEOProps['openGraph'] | undefine
 const mergedTwitter = merge(
   {
     card: (adaptedOg?.images?.length ? 'summary_large_image' : 'summary') as 'summary_large_image' | 'summary',
+    image: firstImage?.url,
+    imageAlt: firstImage?.url ? 'Cream Ferensway F on a deep blue-green background' : undefined,
   },
   METADATA?.twitter
     ? {

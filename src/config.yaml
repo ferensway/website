@@ -17,10 +17,11 @@ metadata:
     follow: true
   openGraph:
     site_name: Ferensway
-    images: []
+    images:
+      - url: '~/assets/images/share-card.svg'
     type: website
   twitter:
-    cardType: summary
+    cardType: summary_large_image
 
 i18n:
   language: en
