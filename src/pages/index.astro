@@ -2,10 +2,10 @@
 import Layout from '~/layouts/Layout.astro';
 
 const metadata = {
-  title: 'Ferensway — Digital, data and AI consultancy',
+  title: 'Ferensway — Data, digital and AI delivery partner',
   ignoreTitleTemplate: true,
   description:
-    'Ferensway helps established businesses improve how they operate using practical digital technology, data and AI.',
+    'Ferensway is a Yorkshire-based delivery partner that designs, builds and ships data, digital and AI products to improve operational efficiency and margins.',
 };
 
 const email = 'dan.humphreys@ferensway.com';
@@ -14,7 +14,11 @@ const email = 'dan.humphreys@ferensway.com';
 <Layout metadata={metadata}>
   <header class="border-b border-[#17313a]/15 bg-[#f5f2eb]">
     <div class="mx-auto flex min-h-20 max-w-[90rem] items-center justify-between px-5 sm:px-8 lg:px-12">
-      <a href="/" class="text-[0.92rem] font-semibold tracking-[0.24em] text-[#102b35]" aria-label="Ferensway home">
+      <a
+        href={import.meta.env.BASE_URL}
+        class="text-[0.92rem] font-semibold tracking-[0.24em] text-[#102b35]"
+        aria-label="Ferensway home"
+      >
         FERENSWAY
       </a>
 
@@ -56,7 +60,8 @@ const email = 'dan.humphreys@ferensway.com';
             class="mt-12 grid max-w-4xl gap-8 border-t border-[#17313a]/20 pt-8 sm:grid-cols-[1fr_auto] sm:items-end"
           >
             <p class="max-w-2xl text-lg leading-8 text-[#43575d] sm:text-xl">
-              We help established businesses identify and implement practical ways to improve how they operate.
+              Ferensway is a Yorkshire-based delivery partner. We design, build and ship products that improve
+              operational efficiency and margins.
             </p>
             <a
               href={`mailto:${email}`}
@@ -85,7 +90,7 @@ const email = 'dan.humphreys@ferensway.com';
           <div class="lg:col-span-7 lg:col-start-6">
             <p class="max-w-3xl text-xl leading-9 text-[#43575d] sm:text-2xl">
               Good technology should remove friction, improve decisions or make valuable work easier. We look at how
-              your organisation actually operates before recommending what to change.
+              your organisation actually operates before designing and building what will make a measurable difference.
             </p>
 
             <ol class="mt-14 border-t border-[#17313a]/20">
@@ -204,7 +209,7 @@ const email = 'dan.humphreys@ferensway.com';
         </div>
         <div class="lg:col-span-7 lg:col-start-6">
           <p class="text-xl leading-9 text-[#253f47] sm:text-2xl">
-            Ferensway is an independent digital, data and AI consultancy founded in Hull by Dan Humphreys, a Chartered
+            Ferensway is an independent, Yorkshire-based delivery partner founded in Hull by Dan Humphreys, a Chartered
             Engineer with a background spanning physical engineering, software, data and large-scale public-sector
             systems.
           </p>
