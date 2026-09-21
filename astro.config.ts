@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   output: 'static',
-  site: 'https://ferensway.com',
+  site: 'https://ferensway.github.io',
   integrations: [sitemap(), astrowind({ config: './src/config.yaml' })],
   vite: {
     plugins: [tailwindcss()],

@@ -13,6 +13,17 @@ npm run dev
 
 Run `npm run check` and `npm run build` before opening a pull request.
 
+## Hosting
+
+Merges to `main` deploy the static site to GitHub Pages at
+`https://ferensway.github.io/website/`. In the repository's **Settings → Pages**,
+set **Build and deployment → Source** to **GitHub Actions**. The deployment
+workflow can also be started manually from the **Actions** tab.
+
+The Astro `site` and `base` settings target the GitHub Pages project URL. When
+the custom domain is ready, update both `astro.config.ts` and `src/config.yaml`
+to use the domain and `/` base path before configuring the domain in GitHub Pages.
+
 ## Principles
 
 - Keep the site static and dependency-light.
