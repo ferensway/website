@@ -1,7 +1,7 @@
 site:
   name: Ferensway
-  site: 'https://ferensway.github.io'
-  base: '/website/'
+  site: 'https://ferensway.com'
+  base: '/'
   trailingSlash: true
 
   googleSiteVerificationId: null
