@@ -1,0 +1,675 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import brandMark from '~/assets/favicons/favicon.svg';
+
+const metadata = {
+  title: 'Manufacturing downtime calculator',
+  description: 'Estimate the lost production, contribution and direct labour cost caused by manufacturing downtime.',
+};
+
+const email = 'dan.humphreys@ferensway.com';
+---
+
+<Layout metadata={metadata}>
+  <header class="border-b border-[#17313a]/15 bg-[#f5f2eb]">
+    <div class="mx-auto flex min-h-20 max-w-[90rem] items-center justify-between px-5 sm:px-8 lg:px-12">
+      <a
+        href="/"
+        class="inline-flex items-center gap-3 text-[0.92rem] font-semibold tracking-[0.24em] text-[#102b35]"
+        aria-label="Ferensway home"
+      >
+        <img src={brandMark.src} width="36" height="36" alt="" class="h-9 w-9 shrink-0" />
+        <span>FERENSWAY</span>
+      </a>
+
+      <nav class="hidden items-center gap-8 text-[0.9rem] text-[#43575d] md:flex" aria-label="Main navigation">
+        <a class="transition-colors hover:text-[#102b35]" href="/#how-we-help">How we help</a>
+        <a class="font-semibold text-[#102b35]" href="/tools/manufacturing-downtime-calculator/" aria-current="page"
+          >Downtime calculator</a
+        >
+        <a class="transition-colors hover:text-[#102b35]" href="/#how-we-work">How we work</a>
+        <a class="transition-colors hover:text-[#102b35]" href="/#about">About</a>
+      </nav>
+
+      <a
+        href={`mailto:${email}`}
+        class="border-b border-[#a5452f] pb-1 text-[0.9rem] font-medium text-[#102b35] transition-colors hover:text-[#a5452f]"
+      >
+        Talk to us
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="tool-hero bg-[#102b35] text-white">
+      <div class="mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12">
+        <p class="eyebrow">Practical tool</p>
+        <h1 class="tool-title">Manufacturing downtime calculator</h1>
+        <p class="tool-intro">
+          Estimate the immediate financial effect of an unplanned production stoppage. Change any input and the result
+          updates automatically.
+        </p>
+      </div>
+    </section>
+
+    <section class="tool-section bg-[#f5f2eb]">
+      <div class="tool-layout mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12">
+        <form class="calculator" id="downtime-form" aria-label="Manufacturing downtime cost calculator">
+          <div class="calculator-card">
+            <div class="calculator-grid">
+              <label class="calculator-field">
+                <span class="field-heading">
+                  <span>Downtime duration</span>
+                  <output data-input-value="downtime">60 minutes</output>
+                </span>
+                <input name="downtime" type="range" min="0" max="480" step="5" value="60" />
+                <span class="range-scale"><span>0</span><span>8 hours</span></span>
+              </label>
+              <label class="calculator-field">
+                <span class="field-heading">
+                  <span>Normal production rate</span>
+                  <output data-input-value="outputRate">100 units / hour</output>
+                </span>
+                <input name="outputRate" type="range" min="0" max="1000" step="10" value="100" />
+                <span class="range-scale"><span>0</span><span>1,000</span></span>
+              </label>
+              <label class="calculator-field">
+                <span class="field-heading">
+                  <span>Contribution per unit</span>
+                  <output data-input-value="unitContribution">£12.50</output>
+                </span>
+                <input name="unitContribution" type="range" min="0" max="200" step="0.5" value="12.5" />
+                <span class="range-scale"><span>£0</span><span>£200</span></span>
+              </label>
+              <label class="calculator-field">
+                <span class="field-heading">
+                  <span>Affected employees</span>
+                  <output data-input-value="employees">6 people</output>
+                </span>
+                <input name="employees" type="range" min="0" max="100" step="1" value="6" />
+                <span class="range-scale"><span>0</span><span>100</span></span>
+              </label>
+              <label class="calculator-field sm:col-span-2">
+                <span class="field-heading">
+                  <span>Average employment cost per person</span>
+                  <output data-input-value="labourRate">£22 / hour</output>
+                </span>
+                <input name="labourRate" type="range" min="0" max="100" step="1" value="22" />
+                <span class="range-scale"><span>£0</span><span>£100</span></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="results-panel" aria-live="polite" aria-atomic="true">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[#d28a76]">Estimated impact</p>
+            <div class="results-grid">
+              <div>
+                <p class="result-label">Lost production</p>
+                <output class="result-value" data-result="units">100 units</output>
+              </div>
+              <div>
+                <p class="result-label">Lost contribution</p>
+                <output class="result-value" data-result="contribution">£1,250</output>
+              </div>
+              <div>
+                <p class="result-label">Idle labour cost</p>
+                <output class="result-value" data-result="labour">£132</output>
+              </div>
+            </div>
+            <div class="total-result">
+              <p class="result-label">Total estimated direct impact</p>
+              <output
+                class="mt-1 block font-serif text-4xl tracking-[-0.03em] text-white sm:text-5xl"
+                data-result="total">£1,382</output
+              >
+            </div>
+          </div>
+        </form>
+
+        <aside class="explanation">
+          <h2 class="font-serif text-3xl tracking-[-0.025em] text-[#102b35]">What the estimate means</h2>
+          <p class="mt-5 text-base leading-7 text-[#43575d]">
+            The calculator combines the contribution lost when output stops with the direct employment cost of people
+            unable to work normally during the stoppage.
+          </p>
+          <dl class="mt-8 space-y-6 border-t border-[#17313a]/20 pt-7">
+            <div>
+              <dt class="font-semibold text-[#102b35]">Lost production</dt>
+              <dd class="mt-2 text-sm leading-6 text-[#52676c]">Downtime in hours × normal units produced per hour.</dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-[#102b35]">Lost contribution</dt>
+              <dd class="mt-2 text-sm leading-6 text-[#52676c]">
+                Lost units × contribution per unit. Contribution is selling price less variable costs.
+              </dd>
+            </div>
+            <div>
+              <dt class="font-semibold text-[#102b35]">Idle labour cost</dt>
+              <dd class="mt-2 text-sm leading-6 text-[#52676c]">
+                Downtime in hours × affected employees × hourly employment cost.
+              </dd>
+            </div>
+          </dl>
+          <div class="mt-8 border-l-2 border-[#a5452f] pl-5 text-sm leading-6 text-[#52676c]">
+            <p class="font-semibold text-[#102b35]">Use this as an indicative figure.</p>
+            <p class="mt-2">
+              It does not include scrap, rework, restart time, missed orders, contractual penalties or knock-on effects
+              elsewhere in the operation.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="guidance-section bg-white">
+      <div class="guidance-layout mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12">
+        <div>
+          <p class="guidance-eyebrow">Using the calculator</p>
+          <h2 class="guidance-title">How to get a useful estimate</h2>
+        </div>
+        <ol class="guidance-grid">
+          <li>
+            <span>01</span>
+            <p>
+              Use the normal sustainable output rate for the affected line or process, rather than its theoretical
+              maximum.
+            </p>
+          </li>
+          <li>
+            <span>02</span>
+            <p>
+              Include salary, pension, National Insurance and other employment costs in the hourly labour figure where
+              those costs are known.
+            </p>
+          </li>
+          <li>
+            <span>03</span>
+            <p>
+              Use contribution rather than revenue. This avoids treating variable costs that were not incurred during
+              the stoppage as part of the loss.
+            </p>
+          </li>
+          <li>
+            <span>04</span>
+            <p>
+              For a fuller business case, add the costs that are specific to your operation, such as waste, overtime,
+              expedited freight or service penalties.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="next-steps" class="cta-section">
+      <div class="cta-layout mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12">
+        <div class="cta-intro">
+          <p class="cta-eyebrow">Turn the estimate into action</p>
+          <h2>Downtime is rarely just a maintenance problem.</h2>
+          <p>
+            The causes and consequences often span production systems, spreadsheets, shift handovers and disconnected
+            information. Ferensway can help you understand that whole picture, then design and deliver a proportionate
+            improvement.
+          </p>
+          <a href={`mailto:${email}?subject=Manufacturing%20downtime%20enquiry`} class="cta-link"
+            >Discuss your downtime challenge</a
+          >
+        </div>
+
+        <ul class="cta-services" aria-label="How Ferensway can help">
+          <li>
+            <span>Digital</span>
+            <h3>Make downtime easier to capture and act on</h3>
+            <p>
+              Replace awkward forms, duplicated entry and manual hand-offs with practical tools that fit how your teams
+              work.
+            </p>
+          </li>
+          <li>
+            <span>Data</span>
+            <h3>Find where lost time really begins</h3>
+            <p>
+              Connect production, maintenance and quality information to create a clearer view of recurring causes and
+              their cost.
+            </p>
+          </li>
+          <li>
+            <span>AI</span>
+            <h3>Surface patterns that deserve attention</h3>
+            <p>
+              Where the underlying data is suitable, use AI to classify events, reveal themes and help people reach
+              useful information sooner.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-[#0b2028] py-8 text-[#9eb0b1]">
+    <div
+      class="mx-auto flex max-w-[90rem] flex-col gap-5 px-5 text-sm sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12"
+    >
+      <p class="font-semibold tracking-[0.2em] text-white">FERENSWAY</p>
+      <p>Hull, East Yorkshire, UK</p>
+      <p>&copy; {new Date().getFullYear()} Ferensway</p>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  .tool-hero {
+    padding: 4.5rem 0 5rem;
+  }
+
+  .tool-title {
+    max-width: 62rem;
+    margin-top: 1.25rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.75rem, 5.5vw, 5.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+
+  .tool-intro {
+    max-width: 48rem;
+    margin-top: 1.75rem;
+    color: #ced8d7;
+    font-size: 1.2rem;
+    line-height: 1.75;
+  }
+
+  .tool-section {
+    padding: 4rem 0 5rem;
+  }
+
+  .tool-layout {
+    display: grid;
+    gap: 3rem;
+  }
+
+  .calculator {
+    min-width: 0;
+  }
+
+  .calculator-card {
+    border: 1px solid rgb(23 49 58 / 20%);
+    background: white;
+    padding: 2rem;
+  }
+
+  .calculator-grid {
+    display: grid;
+    gap: 1.75rem 2rem;
+  }
+
+  .results-panel {
+    background: #102b35;
+    padding: 2rem;
+    color: white;
+  }
+
+  .results-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .total-result {
+    margin-top: 2rem;
+    border-left: 4px solid #d28a76;
+    background: rgb(255 255 255 / 7%);
+    padding: 1.25rem;
+  }
+
+  .explanation {
+    min-width: 0;
+  }
+
+  .eyebrow {
+    color: #d28a76;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .calculator-field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.8rem;
+    color: #102b35;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .field-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .field-heading output {
+    color: #a5452f;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .calculator-field input[type='range'] {
+    width: 100%;
+    height: 1.5rem;
+    margin: 0;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .calculator-field input[type='range']::-webkit-slider-runnable-track {
+    height: 0.3rem;
+    border-radius: 999px;
+    background: linear-gradient(to right, #a5452f var(--range-progress, 0%), #d9d8d3 var(--range-progress, 0%));
+  }
+
+  .calculator-field input[type='range']::-webkit-slider-thumb {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: -0.425rem;
+    appearance: none;
+    border: 3px solid white;
+    border-radius: 50%;
+    background: #a5452f;
+    box-shadow: 0 0 0 1px #a5452f;
+  }
+
+  .calculator-field input[type='range']::-moz-range-track {
+    height: 0.3rem;
+    border-radius: 999px;
+    background: #d9d8d3;
+  }
+
+  .calculator-field input[type='range']::-moz-range-progress {
+    height: 0.3rem;
+    border-radius: 999px;
+    background: #a5452f;
+  }
+
+  .calculator-field input[type='range']::-moz-range-thumb {
+    width: 0.85rem;
+    height: 0.85rem;
+    border: 3px solid white;
+    border-radius: 50%;
+    background: #a5452f;
+    box-shadow: 0 0 0 1px #a5452f;
+  }
+
+  .calculator-field input[type='range']:focus-visible {
+    outline: 2px solid #a5452f;
+    outline-offset: 4px;
+  }
+
+  .range-scale {
+    display: flex;
+    justify-content: space-between;
+    color: #6e7c7e;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  .result-label {
+    color: #aebfbe;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .result-value {
+    display: block;
+    margin-top: 0.4rem;
+    color: white;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .guidance-section {
+    padding: 4.5rem 0;
+  }
+
+  .guidance-layout {
+    display: grid;
+    gap: 3rem;
+  }
+
+  .guidance-eyebrow {
+    color: #a5452f;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .guidance-title {
+    max-width: 24rem;
+    margin-top: 0.85rem;
+    color: #102b35;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.25rem, 3.5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .guidance-grid {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid rgb(23 49 58 / 20%);
+  }
+
+  .guidance-grid li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid rgb(23 49 58 / 20%);
+    padding: 1.25rem 0;
+  }
+
+  .guidance-grid li > span {
+    color: #a5452f;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .guidance-grid p {
+    max-width: 38rem;
+    color: #43575d;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .cta-section {
+    background: #a5452f;
+    padding: 5rem 0;
+    color: white;
+  }
+
+  .cta-layout {
+    display: grid;
+    gap: 3.5rem;
+  }
+
+  .cta-eyebrow,
+  .cta-services > li > span {
+    color: rgb(255 255 255 / 70%);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .cta-intro h2 {
+    max-width: 42rem;
+    margin-top: 1rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.5rem, 4vw, 4.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  .cta-intro > p:not(.cta-eyebrow) {
+    max-width: 43rem;
+    margin-top: 1.5rem;
+    color: rgb(255 255 255 / 82%);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .cta-link {
+    display: inline-flex;
+    min-height: 3.25rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    background: #102b35;
+    padding: 0.75rem 1.25rem;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: background-color 160ms ease;
+  }
+
+  .cta-link:hover {
+    background: #0b2028;
+  }
+
+  .cta-link:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
+  }
+
+  .cta-services {
+    border-top: 1px solid rgb(255 255 255 / 28%);
+  }
+
+  .cta-services li {
+    border-bottom: 1px solid rgb(255 255 255 / 28%);
+    padding: 1.5rem 0;
+  }
+
+  .cta-services h3 {
+    margin-top: 0.7rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.45rem;
+    line-height: 1.2;
+  }
+
+  .cta-services p {
+    margin-top: 0.65rem;
+    color: rgb(255 255 255 / 76%);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  @media (min-width: 40rem) {
+    .calculator-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .calculator-field:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .results-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .tool-layout {
+      grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .explanation {
+      padding-left: 0.5rem;
+    }
+
+    .guidance-layout {
+      grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.7fr);
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .guidance-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 2.5rem;
+    }
+
+    .cta-layout {
+      grid-template-columns: minmax(0, 1.15fr) minmax(24rem, 0.85fr);
+      gap: 5rem;
+      align-items: start;
+    }
+  }
+
+  @media (max-width: 39.999rem) {
+    .tool-hero {
+      padding: 3.5rem 0;
+    }
+
+    .tool-section {
+      padding: 2.5rem 0 4rem;
+    }
+
+    .calculator-card,
+    .results-panel {
+      padding: 1.25rem;
+    }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#downtime-form');
+  if (form) {
+    const number = new Intl.NumberFormat('en-GB', { maximumFractionDigits: 1 });
+    const currency = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 });
+    const value = (name: string) =>
+      Math.max(0, Number((form.elements.namedItem(name) as HTMLInputElement | null)?.value) || 0);
+    const setResult = (name: string, value: string) => {
+      const output = form.querySelector<HTMLOutputElement>(`[data-result="${name}"]`);
+      if (output) output.value = value;
+    };
+    const setInputValue = (name: string, displayValue: string) => {
+      const input = form.elements.namedItem(name) as HTMLInputElement | null;
+      const output = form.querySelector<HTMLOutputElement>(`[data-input-value="${name}"]`);
+      if (output) output.value = displayValue;
+      if (input) {
+        const progress = ((Number(input.value) - Number(input.min)) / (Number(input.max) - Number(input.min))) * 100;
+        input.style.setProperty('--range-progress', `${progress}%`);
+      }
+    };
+    const calculate = () => {
+      const downtime = value('downtime');
+      const outputRate = value('outputRate');
+      const unitContribution = value('unitContribution');
+      const employees = value('employees');
+      const labourRate = value('labourRate');
+      const hours = downtime / 60;
+      const lostUnits = hours * outputRate;
+      const lostContribution = lostUnits * unitContribution;
+      const labourCost = hours * employees * labourRate;
+      setInputValue('downtime', `${number.format(downtime)} minutes`);
+      setInputValue('outputRate', `${number.format(outputRate)} units / hour`);
+      setInputValue('unitContribution', `£${unitContribution.toFixed(2)}`);
+      setInputValue('employees', `${number.format(employees)} people`);
+      setInputValue('labourRate', `£${number.format(labourRate)} / hour`);
+      setResult('units', `${number.format(lostUnits)} units`);
+      setResult('contribution', currency.format(lostContribution));
+      setResult('labour', currency.format(labourCost));
+      setResult('total', currency.format(lostContribution + labourCost));
+    };
+    form.addEventListener('input', calculate);
+    calculate();
+  }
+</script>
